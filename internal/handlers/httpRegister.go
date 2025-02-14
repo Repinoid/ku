@@ -68,7 +68,7 @@ func RegisterUser(rwr http.ResponseWriter, req *http.Request) {
 		models.Sugar.Debugf("addUser %+v %+v\n", logos, err)
 		return
 	}
-	rwr.Header().Set("Authorization", "Bearer <"+Token+">")
+	rwr.Header().Add("Authorization", "Bearer <"+Token+">")
 	tok := struct {
 		Token string
 		Until time.Time
