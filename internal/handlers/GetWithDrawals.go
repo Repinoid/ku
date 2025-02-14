@@ -12,9 +12,9 @@ import (
 )
 
 type WithStruct struct {
-	Order        string  `json:"order"`
-	Sum          float64 `json:"sum"`
-	Processed_at string  `json:"processed_at"`
+	Order       string  `json:"order"`
+	Sum         float64 `json:"sum"`
+	ProcessedAt string  `json:"processed_at"`
 }
 
 func GetWithDrawals(rwr http.ResponseWriter, req *http.Request) {
@@ -41,7 +41,7 @@ func GetWithDrawals(rwr http.ResponseWriter, req *http.Request) {
 	for rows.Next() {
 		var tm time.Time
 		errScan = rows.Scan(&ord.Order, &ord.Sum, &tm)
-		ord.Processed_at = tm.Format(time.RFC3339)
+		ord.ProcessedAt = tm.Format(time.RFC3339)
 		if errScan != nil {
 			break
 		}

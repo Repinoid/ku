@@ -18,9 +18,9 @@ type Tovar struct {
 	Price       float64 `json:"price"`
 }
 type Buyback struct {
-	Match       string `json:"match"`
-	Reward      int    `json:"reward"`
-	Reward_type string `json:"reward_type"`
+	Match      string `json:"match"`
+	Reward     int    `json:"reward"`
+	RewardType string `json:"RewardType"`
 }
 type orda struct {
 	Order string  `json:"order"`
@@ -48,11 +48,11 @@ var Time429 time.Time
 
 // }
 var marks = []Buyback{
-	{Match: "Acer", Reward: 20, Reward_type: "pt"},
-	{Match: "Bork", Reward: 10, Reward_type: "%"},
-	{Match: "Asus", Reward: 20, Reward_type: "pt"},
-	{Match: "Samsung", Reward: 25, Reward_type: "%"},
-	{Match: "Apple", Reward: 35, Reward_type: "%"},
+	{Match: "Acer", Reward: 20, RewardType: "pt"},
+	{Match: "Bork", Reward: 10, RewardType: "%"},
+	{Match: "Asus", Reward: 20, RewardType: "pt"},
+	{Match: "Samsung", Reward: 25, RewardType: "%"},
+	{Match: "Apple", Reward: 35, RewardType: "%"},
 }
 
 func LoadGood(num int, goodIdx int, price float64) error {

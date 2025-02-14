@@ -12,10 +12,10 @@ import (
 )
 
 type OrdStruct struct {
-	Number      string  `json:"number"`
-	Status      string  `json:"status"`
-	Accrual     float64 `json:"accrual"`
-	Uploaded_at string  `json:"uploaded_at"`
+	Number     string  `json:"number"`
+	Status     string  `json:"status"`
+	Accrual    float64 `json:"accrual"`
+	UploadedAt string  `json:"uploaded_at"`
 }
 
 func GetOrders(rwr http.ResponseWriter, req *http.Request) {
@@ -42,7 +42,7 @@ func GetOrders(rwr http.ResponseWriter, req *http.Request) {
 	for rows.Next() {
 		var tm time.Time
 		errScan = rows.Scan(&ord.Number, &ord.Status, &ord.Accrual, &tm)
-		ord.Uploaded_at = tm.Format(time.RFC3339)
+		ord.UploadedAt = tm.Format(time.RFC3339)
 		if errScan != nil {
 			break
 		}
