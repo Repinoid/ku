@@ -52,7 +52,7 @@ func PutOrder(rwr http.ResponseWriter, req *http.Request) {
 	err = securitate.DataBase.GetIDByOrder(context.Background(), orderNum, &orderID)
 	if err != nil { // если такого номера заказа нет в базе вносим его
 
-		orderStat, statusCode := rual.GetFromAccrual(orderStr)
+		orderStat, statusCode, _ := rual.GetFromAccrual(orderStr)
 
 		//err =  // tokenID)	- ID пользователя по полученному токену
 		if statusCode != http.StatusOK || // если не ОК по accrual или ошибка по загрузке заказа
