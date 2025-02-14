@@ -2,8 +2,6 @@ module github.com/Repinoid/ku
 
 go 1.22
 
-toolchain go1.23.2
-
 require (
 	github.com/go-resty/resty/v2 v2.16.5
 	github.com/golang-jwt/jwt/v4 v4.5.1
