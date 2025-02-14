@@ -19,7 +19,7 @@ func (suite *TSuite) Test02GetFromAccrual() {
 
 	for idx := range marks {
 		Order := strconv.Itoa(Luhner(idx))
-		orderStat, StatusCode := GetFromAccrual(Order)
+		orderStat, StatusCode, _ := GetFromAccrual(Order)
 	//	assert.NoErrorf(suite.T(), err, "err %v", err)
 		assert.Equal(suite.T(), http.StatusOK, StatusCode)
 		log.Println(orderStat)
