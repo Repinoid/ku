@@ -68,11 +68,11 @@ func RegisterUser(rwr http.ResponseWriter, req *http.Request) {
 		models.Sugar.Debugf("addUser %+v %+v\n", logos, err)
 		return
 	}
-	rwr.Header().Add("Authorization", "Bearer <"+Token+">")
 	tok := struct {
 		Token string
 		Until time.Time
 	}{Token: Token, Until: time.Now().Add(securitate.TokenExp)}
 	rwr.WriteHeader(http.StatusOK) // 200 — пользователь успешно зарегистрирован и аутентифицирован;
 	json.NewEncoder(rwr).Encode(tok)
+	rwr.Header().Add("Authorization", "Bearer <"+Token+">")
 }
