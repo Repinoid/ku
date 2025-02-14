@@ -124,7 +124,7 @@ func GetFromAccrual(number string) (OrderStatus, int) {
 	// 	SetHeader("Content-Type", "application/json").
 	// 	Get("/api/orders/" + number)
 
-	fmt.Printf("-------- rual.Accrualhost %s err %+v\n", Accrualhost, err)
+	fmt.Printf(">>>>>> rual.Accrualhost %s err %+v\n", Accrualhost, err)
 	if err != nil {
 		return *orderStat, http.StatusInternalServerError // 500
 	}
