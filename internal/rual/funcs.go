@@ -109,26 +109,30 @@ func GetFromAccrual(number string) (OrderStatus, int) {
 	wait429 := time.Until(Time429) // время до разморозки
 	time.Sleep(wait429)
 
-	httpc := resty.New() //
-	httpc.SetBaseURL("http://" + Accrualhost)
-	getReq := httpc.R()
+	// httpc := resty.New() //
+	// httpc.SetBaseURL("http://" + Accrualhost)
+	// getReq := httpc.R()
+
+	zapr := "http://" + Accrualhost + "/api/orders/" + number
+	resp, err := http.Get(zapr)
+	//	resp.StatusCode
 
 	orderStat := &OrderStatus{}
-	resp, err := getReq.
-		SetResult(&orderStat).
-		SetDoNotParseResponse(false).
-		SetHeader("Content-Type", "application/json").
-		Get("/api/orders/" + number)
+	// resp, err := getReq.
+	// 	SetResult(&orderStat).
+	// 	SetDoNotParseResponse(false).
+	// 	SetHeader("Content-Type", "application/json").
+	// 	Get("/api/orders/" + number)
 
 	fmt.Printf("-------- rual.Accrualhost %s err %+v\n", Accrualhost, err)
 	if err != nil {
 		return *orderStat, http.StatusInternalServerError // 500
 	}
 
-	contentType := resp.Header().Get("Content-Type")
+	contentType := resp.Header.Get("Content-Type")
 
-	if resp.StatusCode() == http.StatusTooManyRequests && contentType == "text/plain" { // http.StatusTooManyRequests 429
-		delayTime := resp.Header().Get("Retry-After")
+	if resp.StatusCode == http.StatusTooManyRequests && contentType == "text/plain" { // http.StatusTooManyRequests 429
+		delayTime := resp.Header.Get("Retry-After")
 		dTime, err := strconv.Atoi(delayTime)
 		if err == nil {
 			var mutter sync.Mutex // установка wait429 - everybody sleeps until this
@@ -138,7 +142,7 @@ func GetFromAccrual(number string) (OrderStatus, int) {
 			time.Sleep(time.Duration(dTime) * time.Second)
 		}
 	}
-	return *orderStat, resp.StatusCode()
+	return *orderStat, resp.StatusCode
 }
 
 /*
