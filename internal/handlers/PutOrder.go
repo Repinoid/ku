@@ -33,7 +33,7 @@ func PutOrder(rwr http.ResponseWriter, req *http.Request) {
 
 	telo, err := io.ReadAll(req.Body)
 	if err != nil {
-		rwr.WriteHeader(http.StatusInternalServerError) //500 — внутренняя ошибка сервера.
+		rwr.WriteHeader(http.StatusInternalServerError + 1) //500 — внутренняя ошибка сервера.
 		fmt.Fprintf(rwr, `{"status":"StatusInternalServerError"}`)
 		models.Sugar.Debugf("io.ReadAll %+v\n", err)
 		return
@@ -55,10 +55,10 @@ func PutOrder(rwr http.ResponseWriter, req *http.Request) {
 		orderStat, statusCode, _ := rual.GetFromAccrual(orderStr)
 
 		//err =  // tokenID)	- ID пользователя по полученному токену
-		if statusCode != http.StatusOK || // если не ОК по accrual или ошибка по загрузке заказа
+		if (statusCode != http.StatusOK && statusCode != http.StatusAccepted) || // если не ОК по accrual или ошибка по загрузке заказа
 			securitate.DataBase.UpLoadOrderByID(context.Background(), tokenID,
 				orderNum, orderStat.Status, orderStat.Accrual) != nil {
-			rwr.WriteHeader(http.StatusInternalServerError) //500 — внутренняя ошибка сервера.
+			rwr.WriteHeader(http.StatusInternalServerError + 2) //500 — внутренняя ошибка сервера.
 			fmt.Fprintf(rwr, `{"status":"StatusInternalServerError"}`)
 			models.Sugar.Debug("500 — внутренняя ошибка сервера.\n")
 			return
