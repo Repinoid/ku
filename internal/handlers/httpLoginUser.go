@@ -14,7 +14,7 @@ import (
 )
 
 func LoginUser(rwr http.ResponseWriter, req *http.Request) {
-	
+
 	if !strings.Contains(req.Header.Get("Content-Type"), "application/json") {
 		rwr.WriteHeader(http.StatusBadRequest) //400 — неверный формат запроса;
 		fmt.Fprintf(rwr, `{"status":"StatusBadRequest"}`)
@@ -76,6 +76,7 @@ func LoginUser(rwr http.ResponseWriter, req *http.Request) {
 	}{Token: Token, Until: time.Now().Add(securitate.TokenExp)}
 	rwr.WriteHeader(http.StatusOK) // 200 — пользователь успешно зарегистрирован и аутентифицирован;
 	json.NewEncoder(rwr).Encode(tok)
+	rwr.Header().Set("Authorization", "Bearer <"+Token+">")
 }
 
 // --------------------------------------------------------------------------------------------------
