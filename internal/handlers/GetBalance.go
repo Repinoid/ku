@@ -16,6 +16,7 @@ type BalanceStruct struct {
 }
 
 func GetBalance(rwr http.ResponseWriter, req *http.Request) {
+	rwr.Header().Set("Content-Type", "application/json")
 
 	UserID, err := securitate.DataBase.LoginByToken(rwr, req)
 	if err != nil {

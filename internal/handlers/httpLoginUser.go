@@ -14,6 +14,7 @@ import (
 )
 
 func LoginUser(rwr http.ResponseWriter, req *http.Request) {
+	
 	if !strings.Contains(req.Header.Get("Content-Type"), "application/json") {
 		rwr.WriteHeader(http.StatusBadRequest) //400 — неверный формат запроса;
 		fmt.Fprintf(rwr, `{"status":"StatusBadRequest"}`)
