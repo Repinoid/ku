@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 
 	"github.com/Repinoid/ku/internal/rual"
@@ -12,14 +13,17 @@ func initEnvs() error {
 	enva, exists := os.LookupEnv("RUN_ADDRESS")
 	if exists {
 		host = enva
+		fmt.Printf("LookupEnv(RUN_ADDRESS)   %s \n", enva)
 	}
 	enva, exists = os.LookupEnv("DATABASE_URI")
 	if exists {
 		securitate.DBEndPoint = enva
+		fmt.Printf("LookupEnv(DATABASE_URI)   %s \n", enva)
 	}
 	enva, exists = os.LookupEnv("ACCRUAL_SYSTEM_ADDRESS")
 	if exists {
 		rual.Accrualhost = enva
+		fmt.Printf("LookupEnv(ACCRUAL_SYSTEM_ADDRESS)   %s \n", enva)
 	}
 
 	var hostFlag, dbFlag, acchostFlag string
@@ -30,12 +34,15 @@ func initEnvs() error {
 
 	if _, exists := os.LookupEnv("RUN_ADDRESS"); !exists {
 		host = hostFlag
+		fmt.Printf("flag host   %s \n", host)
 	}
 	if _, exists := os.LookupEnv("DATABASE_URI"); !exists {
 		securitate.DBEndPoint = dbFlag
+		fmt.Printf("dbase   %s \n", dbFlag)
 	}
 	if _, exists := os.LookupEnv("ACCRUAL_SYSTEM_ADDRESS"); !exists {
 		rual.Accrualhost = acchostFlag
+		fmt.Printf("accccc   %s \n", acchostFlag)
 	}
 
 	return nil
