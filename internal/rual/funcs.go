@@ -110,14 +110,14 @@ func GetFromAccrual(number string) (OrderStatus, int) {
 	time.Sleep(wait429)
 
 	httpc := resty.New() //
-	httpc.SetBaseURL("http://" + Accrualhost)
+	httpc.SetBaseURL(Accrualhost)
+	//	httpc.SetBaseURL("http://" + Accrualhost)
 	getReq := httpc.R()
 
 	orderStat := &OrderStatus{}
 	resp, err := getReq.
 		SetResult(&orderStat).
-		SetDoNotParseResponse(true).
-		//	SetDoNotParseResponse(false).
+		SetDoNotParseResponse(false).
 		SetHeader("Content-Type", "application/json").
 		Get("/api/orders/" + number)
 
