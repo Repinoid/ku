@@ -27,7 +27,7 @@ func main() {
 	if err := initEnvs(); err != nil {
 		panic(err)
 	}
-	fmt.Printf("host %s -------- rual.Accrualhost %s", host, rual.Accrualhost)
+	fmt.Printf("host %s -------- rual.Accrualhost %s\n", host, rual.Accrualhost)
 
 	if err := run(); err != nil {
 		panic(err)

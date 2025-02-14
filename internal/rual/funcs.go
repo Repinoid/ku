@@ -113,6 +113,8 @@ func GetFromAccrual(number string) (orderStat OrderStatus, StatusCode int) {
 	httpc.SetBaseURL("http://" + Accrualhost)
 	getReq := httpc.R()
 
+	fmt.Printf("-------- rual.Accrualhost %s\n", Accrualhost)
+
 	resp, err := getReq.
 		SetResult(&orderStat).
 		SetDoNotParseResponse(false).
@@ -135,11 +137,7 @@ func GetFromAccrual(number string) (orderStat OrderStatus, StatusCode int) {
 			time.Sleep(time.Duration(dTime) * time.Second)
 		}
 	}
-	status := resp.StatusCode()
-	if status == http.StatusTooManyRequests {
-		status = http.StatusOK
-	}
-	return orderStat, status
+	return orderStat, resp.StatusCode()
 }
 
 /*
