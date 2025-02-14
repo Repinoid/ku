@@ -13,7 +13,7 @@ import (
 	"go.uber.org/zap"
 )
 
-var host = "localhost:8088"
+var host = "localhost:8080"
 
 func main() {
 	logger, err := zap.NewDevelopment()

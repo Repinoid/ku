@@ -54,22 +54,15 @@ func PutOrder(rwr http.ResponseWriter, req *http.Request) {
 
 		orderStat, statusCode := rual.GetFromAccrual(orderStr)
 
-		erlo := securitate.DataBase.UpLoadOrderByID(context.Background(), tokenID, orderNum, orderStat.Status, orderStat.Accrual)
-
 		//err =  // tokenID)	- ID пользователя по полученному токену
-		if statusCode != http.StatusOK { // || // если не ОК по accrual или ошибка по загрузке заказа
+		if statusCode != http.StatusOK || // если не ОК по accrual или ошибка по загрузке заказа
+			securitate.DataBase.UpLoadOrderByID(context.Background(), tokenID,
+				orderNum, orderStat.Status, orderStat.Accrual) != nil {
 			rwr.WriteHeader(http.StatusInternalServerError) //500 — внутренняя ошибка сервера.
 			fmt.Fprintf(rwr, `{"status":"StatusInternalServerError"}`)
 			models.Sugar.Debug("500 — внутренняя ошибка сервера.\n")
 			return
 		}
-		if erlo != nil { // || // если не ОК по accrual или ошибка по загрузке заказа
-			rwr.WriteHeader(http.StatusInternalServerError + 55) //500 — внутренняя ошибка сервера.
-			fmt.Fprintf(rwr, `{"status":"StatusInternalServerError"}`)
-			models.Sugar.Debug("500 — внутренняя ошибка сервера.\n")
-			return
-		}
-
 		rwr.WriteHeader(http.StatusAccepted) //202 — новый номер заказа принят в обработку;
 		fmt.Fprintf(rwr, `{"status":"StatusAccepted"}`)
 		return

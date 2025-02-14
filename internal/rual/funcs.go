@@ -32,7 +32,7 @@ type OrderStatus struct {
 	Accrual float64 `json:"accrual"`
 }
 
-var Accrualhost = "localhost:8080"
+var Accrualhost = "localhost:8088"
 var Time429 time.Time
 
 // func main() {
