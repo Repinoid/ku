@@ -7,7 +7,6 @@ import (
 
 	"github.com/Repinoid/ku/internal/handlers"
 	"github.com/Repinoid/ku/internal/models"
-	"github.com/Repinoid/ku/internal/rual"
 	"github.com/Repinoid/ku/internal/securitate"
 
 	"github.com/gorilla/mux"
@@ -27,7 +26,7 @@ func main() {
 	if err := initEnvs(); err != nil {
 		panic(err)
 	}
-	fmt.Printf("host %s -------- rual.Accrualhost %s\n", host, rual.Accrualhost)
+	//	fmt.Printf("host %s -------- rual.Accrualhost %s\n", host, rual.Accrualhost)
 
 	if err := run(); err != nil {
 		panic(err)

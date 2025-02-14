@@ -86,11 +86,12 @@ func Withdraw(rwr http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		orderStat, statusCode := rual.GetFromAccrual(wdrStruct.Order)
+		orderStat, statusCode, err := rual.GetFromAccrual(wdrStruct.Order)
 		//err =  // UserID)	- ID пользователя по полученному токену
 		if statusCode != http.StatusOK ||
 			securitate.DataBase.UpLoadOrderByID(context.Background(), UserID, orderNum, orderStat.Status, orderStat.Accrual) != nil {
-			rwr.WriteHeader(http.StatusInternalServerError) //500 — внутренняя ошибка сервера.
+			rwr.WriteHeader(statusCode + 1) //500 — внутренняя ошибка сервера.
+			//			rwr.WriteHeader(http.StatusInternalServerError) //500 — внутренняя ошибка сервера.
 			fmt.Fprintf(rwr, `{"status":"StatusInternalServerError"}`)
 			models.Sugar.Debug("500 — внутренняя ошибка сервера.\n")
 			return

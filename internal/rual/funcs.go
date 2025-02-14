@@ -104,7 +104,7 @@ func Luhner(numb int) int {
 }
 
 // OrderStatus - {номер заказа; статус расчёта начисления; рассчитанные баллы к начислению}
-func GetFromAccrual(number string) (OrderStatus, int) {
+func GetFromAccrual(number string) (OrderStatus, int, error) {
 
 	wait429 := time.Until(Time429) // время до разморозки
 	time.Sleep(wait429)
@@ -121,9 +121,9 @@ func GetFromAccrual(number string) (OrderStatus, int) {
 		SetHeader("Content-Type", "application/json").
 		Get("/api/orders/" + number)
 
-	fmt.Printf("-------->>> rual.Accrualhost %s err %+v\n", Accrualhost, err)
+		//	fmt.Printf("-------->>> rual.Accrualhost %s err %+v\n", Accrualhost, err)
 	if err != nil {
-		return *orderStat, http.StatusInternalServerError // 500
+		return *orderStat, http.StatusInternalServerError, err // 500
 	}
 
 	contentType := resp.Header().Get("Content-Type")
@@ -139,7 +139,7 @@ func GetFromAccrual(number string) (OrderStatus, int) {
 			time.Sleep(time.Duration(dTime) * time.Second)
 		}
 	}
-	return *orderStat, resp.StatusCode()
+	return *orderStat, resp.StatusCode(), nil
 }
 
 /*
