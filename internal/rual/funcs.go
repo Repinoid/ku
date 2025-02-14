@@ -113,13 +113,13 @@ func GetFromAccrual(number string) (orderStat OrderStatus, StatusCode int) {
 	httpc.SetBaseURL("http://" + Accrualhost)
 	getReq := httpc.R()
 
-	fmt.Printf("-------- rual.Accrualhost %s\n", Accrualhost)
-
 	resp, err := getReq.
 		SetResult(&orderStat).
 		SetDoNotParseResponse(false).
 		SetHeader("Content-Type", "application/json").
 		Get("/api/orders/" + number)
+
+	fmt.Printf("-------- rual.Accrualhost %s err %+v\n", Accrualhost, err)
 	if err != nil {
 		return orderStat, http.StatusInternalServerError // 500
 	}
