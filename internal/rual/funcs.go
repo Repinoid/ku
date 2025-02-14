@@ -121,7 +121,7 @@ func GetFromAccrual(number string) (OrderStatus, int, error) {
 		SetHeader("Content-Type", "application/json").
 		Get("/api/orders/" + number)
 
-	fmt.Printf("-------->>> ord %+v err %v\n", orderStat, err)
+		//	fmt.Printf("-------->>> ord %+v err %v\n", orderStat, err)
 	if err != nil {
 		return *orderStat, http.StatusInternalServerError, err // 500
 	}
@@ -136,7 +136,7 @@ func GetFromAccrual(number string) (OrderStatus, int, error) {
 			mutter.Lock()
 			Time429 = time.Now().Add(time.Duration(dTime) * time.Second)
 			mutter.Unlock()
-			time.Sleep(time.Duration(dTime) * time.Second)
+			//		time.Sleep(time.Duration(dTime) * time.Second)
 		}
 	}
 	return *orderStat, resp.StatusCode(), nil

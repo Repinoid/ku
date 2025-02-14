@@ -21,10 +21,6 @@ var DBEndPoint = "postgres://postgres:passwordas@localhost:5432/forgo"
 
 //var DBEndPoint = "postgres://postgres:passwordas@forgo.c7wegmiakpkw.us-west-1.rds.amazonaws.com:5432/forgo"
 
-//var "accounts" = "accounts"
-//var "orders" = "orders"
-//var "tokens" = "tokens"
-
 // соединение с базой данных
 func ConnectUsersTable(ctx context.Context, DBEndPoint string) (*DBstruct, error) {
 	dataBase := &DBstruct{}
