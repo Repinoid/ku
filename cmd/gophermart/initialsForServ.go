@@ -8,7 +8,7 @@ import (
 	"github.com/Repinoid/ku/internal/securitate"
 )
 
-func initAgent() error {
+func initEnvs() error {
 	enva, exists := os.LookupEnv("RUN_ADDRESS")
 	if exists {
 		host = enva
@@ -34,8 +34,9 @@ func initAgent() error {
 	if _, exists := os.LookupEnv("DATABASE_URI"); !exists {
 		securitate.DBEndPoint = dbFlag
 	}
-	//	if _, exists := os.LookupEnv("ACCRUAL_SYSTEM_ADDRESS"); !exists {
-	rual.Accrualhost = acchostFlag
-	//	}
+	if _, exists := os.LookupEnv("ACCRUAL_SYSTEM_ADDRESS"); !exists {
+		rual.Accrualhost = acchostFlag
+	}
+
 	return nil
 }

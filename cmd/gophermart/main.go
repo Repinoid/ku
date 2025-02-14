@@ -7,13 +7,14 @@ import (
 
 	"github.com/Repinoid/ku/internal/handlers"
 	"github.com/Repinoid/ku/internal/models"
+	"github.com/Repinoid/ku/internal/rual"
 	"github.com/Repinoid/ku/internal/securitate"
 
 	"github.com/gorilla/mux"
 	"go.uber.org/zap"
 )
 
-var host = "localhost:8080"
+var host = "localhost:8081"
 
 func main() {
 	logger, err := zap.NewDevelopment()
@@ -23,9 +24,11 @@ func main() {
 	defer logger.Sync()
 	models.Sugar = *logger.Sugar()
 
-	if err := initAgent(); err != nil {
+	if err := initEnvs(); err != nil {
 		panic(err)
 	}
+	fmt.Printf("host %s -------- rual.Accrualhost %s", host, rual.Accrualhost)
+
 	if err := run(); err != nil {
 		panic(err)
 	}
