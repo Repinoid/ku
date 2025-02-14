@@ -28,7 +28,7 @@ func PutOrder(rwr http.ResponseWriter, req *http.Request) {
 
 	tokenID, err := securitate.DataBase.LoginByToken(rwr, req)
 	if err != nil {
-		return
+		return // http.StatusUnauthorized
 	}
 
 	telo, err := io.ReadAll(req.Body)
