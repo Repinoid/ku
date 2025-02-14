@@ -218,6 +218,9 @@ func (dataBase *DBstruct) GetToken(ctx context.Context, userName string, tokenSt
 
 func (dataBase *DBstruct) UpLoadOrderByID(ctx context.Context, userID int64, orderNumber int64, orderStatus string, accrual float64) error {
 	db := dataBase.DB
+	if orderStatus == "" || orderStatus == "REGISTERED" {
+		orderStatus = "NEW"
+	}
 	order := "INSERT INTO orders(userCode, orderNumber, orderStatus, accrual) VALUES ($1, $2, $3, $4) ;"
 	_, err := db.Exec(ctx, order, userID, orderNumber, orderStatus, accrual)
 	if err != nil {
