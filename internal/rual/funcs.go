@@ -92,7 +92,7 @@ func poster(postCMD string, wts []byte) error {
 	_, err := req.
 		SetDoNotParseResponse(false).
 		Post(postCMD) //
-		//	log.Printf("%s responce from server %+v  body is %s\n", postCMD, resp.StatusCode(), resp.Body())
+		////	log.Printf("%s responce from server %+v  body is %s\n", postCMD, resp.StatusCode(), resp.Body())
 	return err
 }
 
