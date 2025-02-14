@@ -64,6 +64,7 @@ func GetOrders(rwr http.ResponseWriter, req *http.Request) {
 		return
 	}
 	rwr.WriteHeader(http.StatusOK)
+	models.Sugar.Debugf("ЩКВФФФФФ  %+v\n", orda)
 	//	fmt.Fprintf(rwr, `{"status":"StatusOK"}`)
 	json.NewEncoder(rwr).Encode(orda)
 }
