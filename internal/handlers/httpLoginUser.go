@@ -57,7 +57,7 @@ func LoginUser(rwr http.ResponseWriter, req *http.Request) {
 		fmt.Fprintf(rwr, `{"status":"StatusUnauthorized"}`)
 		return
 	}
-	Token, err := securitate.BuildJWTString(logos.UserName, []byte(securitate.SECRET_KEY))
+	Token, err := securitate.BuildJWTString(logos.UserName, []byte(securitate.SecretKey))
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		return
@@ -72,7 +72,7 @@ func LoginUser(rwr http.ResponseWriter, req *http.Request) {
 	tok := struct {
 		Token string
 		Until time.Time
-	}{Token: Token, Until: time.Now().Add(securitate.TOKEN_EXP)}
+	}{Token: Token, Until: time.Now().Add(securitate.TokenExp)}
 	rwr.WriteHeader(http.StatusOK) // 200 — пользователь успешно зарегистрирован и аутентифицирован;
 	json.NewEncoder(rwr).Encode(tok)
 }

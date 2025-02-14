@@ -53,7 +53,7 @@ func RegisterUser(rwr http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	Token, err := securitate.BuildJWTString(logos.UserName, []byte(securitate.SECRET_KEY))
+	Token, err := securitate.BuildJWTString(logos.UserName, []byte(securitate.SecretKey))
 	if err != nil {
 		rwr.WriteHeader(http.StatusInternalServerError) //500 — внутренняя ошибка сервера.
 		fmt.Fprintf(rwr, `{"status":"StatusInternalServerError"}`)
@@ -71,7 +71,7 @@ func RegisterUser(rwr http.ResponseWriter, req *http.Request) {
 	tok := struct {
 		Token string
 		Until time.Time
-	}{Token: Token, Until: time.Now().Add(securitate.TOKEN_EXP)}
+	}{Token: Token, Until: time.Now().Add(securitate.TokenExp)}
 	rwr.WriteHeader(http.StatusOK) // 200 — пользователь успешно зарегистрирован и аутентифицирован;
 	json.NewEncoder(rwr).Encode(tok)
 }
