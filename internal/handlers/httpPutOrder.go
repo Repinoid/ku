@@ -58,7 +58,7 @@ func PutOrder(rwr http.ResponseWriter, req *http.Request) {
 		if statusCode != http.StatusOK || // если не ОК по accrual или ошибка по загрузке заказа
 			securitate.DataBase.UpLoadOrderByID(context.Background(), tokenID,
 				orderNum, orderStat.Status, orderStat.Accrual) != nil {
-			rwr.WriteHeader(http.StatusInternalServerError) //500 — внутренняя ошибка сервера.
+			rwr.WriteHeader(http.StatusInternalServerError + 55) //500 — внутренняя ошибка сервера.
 			fmt.Fprintf(rwr, `{"status":"StatusInternalServerError"}`)
 			models.Sugar.Debug("500 — внутренняя ошибка сервера.\n")
 			return
