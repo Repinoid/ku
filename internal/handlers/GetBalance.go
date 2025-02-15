@@ -23,22 +23,6 @@ func GetBalance(rwr http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// tokenStr := req.Header.Get("Authorization")
-	// tokenStr, niceP := strings.CutPrefix(tokenStr, "Bearer <") // обрезаем -- Bearer <token>
-	// tokenStr, niceS := strings.CutSuffix(tokenStr, ">")
-
-	// //	var UserID int64
-	// //	err := DataBase.GetIDByToken(context.Background(), tokenStr, &UserID)	// получаем ID пользователя по полученному токену
-
-	// if (!niceP) || (!niceS) || (securitate.DataBase.GetIDByToken(context.Background(), tokenStr, &UserID) != nil) { // если неверная строка в Authorization - до GetIDByToken дело не дойдёт
-	// 	rwr.WriteHeader(http.StatusUnauthorized)            // 401 — неверная пара логин/пароль;
-	// 	fmt.Fprintf(rwr, `{"status":"StatusUnauthorized"}`) // либо токена неверный формат, либо по нему нет юзера в базе
-	// 	models.Sugar.Debug("Authorization header\n")
-	// 	return
-	// }
-
-	// order := "SELECT (SELECT SUM(o.accrual) FROM orders O where o.usercode=$1) as current, " +
-	// 	"(SELECT COALESCE(SUM(w.amount),0) FROM withdrawn w where w.usercode=$1) as withdrawn;"
 	order := "SELECT (SELECT SUM(orders.accrual) FROM orders where orders.usercode=$1), " +
 		"(SELECT COALESCE(SUM(withdrawn.amount),0) FROM withdrawn  where withdrawn.usercode=$1) ;"
 

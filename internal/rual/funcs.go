@@ -35,18 +35,6 @@ type OrderStatus struct {
 var Accrualhost = "localhost:8089"
 var Time429 time.Time
 
-// func main() {
-
-// 	cmnd := exec.Command("./acc.exe", "-d=postgres://postgres:passwordas@localhost:5432/forgo")
-// 	cmnd.Start()
-
-// 	time.Sleep(time.Second)
-
-// 	if err := run(); err != nil {
-// 		panic(err)
-// 	}
-
-// }
 var marks = []Buyback{
 	{Match: "Acer", Reward: 20, RewardType: "pt"},
 	{Match: "Bork", Reward: 10, RewardType: "%"},
@@ -74,7 +62,7 @@ func InitAccrualForTests() error {
 			return fmt.Errorf("%w", err)
 		}
 	}
-	for idx := range 999 {
+	for idx := range 999 { // затарим ордерами
 		err := LoadGood(idx+1, int(rand.Int63n(5)), 1000)
 		if err != nil {
 			return fmt.Errorf("%w", err)
@@ -92,12 +80,11 @@ func poster(postCMD string, wts []byte) error {
 	_, err := req.
 		SetDoNotParseResponse(false).
 		Post(postCMD) //
-		////	log.Printf("%s responce from server %+v  body is %s\n", postCMD, resp.StatusCode(), resp.Body())
 	return err
 }
 
 func Luhner(numb int) int {
-	// if luhn.Valid(numb) {
+	// if luhn.Valid(numb) {	// если возвращать неизменённым, возникнут коллизии, типа у 2 Лун 26, и у 26 тоже 26
 	// 	return numb
 	// }
 	return 10*numb + luhn.CalculateLuhn(numb)
@@ -121,7 +108,6 @@ func GetFromAccrual(number string) (OrderStatus, int, error) {
 		SetHeader("Content-Type", "application/json").
 		Get("/api/orders/" + number)
 
-		//	fmt.Printf("-------->>> ord %+v err %v\n", orderStat, err)
 	if err != nil {
 		return *orderStat, http.StatusInternalServerError, err // 500
 	}
@@ -141,16 +127,3 @@ func GetFromAccrual(number string) (OrderStatus, int, error) {
 	}
 	return *orderStat, resp.StatusCode(), nil
 }
-
-/*
-t:= time.Now().Add(2*time.Second)
-
-time.Sleep(9*time.Second)
-u := time.Until(t)
-fmt.Println(u)
-
-time.Sleep(u)
-
-fmt.Println(t, "\n", time.Now())
-
-*/
