@@ -13,7 +13,7 @@ func initEnvs() error {
 	enva, exists := os.LookupEnv("RUN_ADDRESS")
 	if exists {
 		host = enva
-		fmt.Printf("LookupEnv(RUN_ADDRESS)   %s \n", enva)
+		fmt.Printf("LookupEnv(RUN_ADDRESS)   %s \n", enva)	// хотел определить откуда тесты берут параметры. оказалось из ENVs
 	}
 	enva, exists = os.LookupEnv("DATABASE_URI")
 	if exists {
@@ -32,7 +32,7 @@ func initEnvs() error {
 	flag.StringVar(&acchostFlag, "r", rual.Accrualhost, "Only -a={host:port} flag is allowed here")
 	flag.Parse()
 
-	if _, exists := os.LookupEnv("RUN_ADDRESS"); !exists {
+	if _, exists := os.LookupEnv("RUN_ADDRESS"); !exists {	// если закомментить все IF ниже - у флагов будет приоритет перед переменными окружения
 		host = hostFlag
 		fmt.Printf("flag host   %s \n", host)
 	}

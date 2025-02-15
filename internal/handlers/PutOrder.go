@@ -28,7 +28,7 @@ func PutOrder(rwr http.ResponseWriter, req *http.Request) {
 
 	tokenID, err := securitate.DataBase.LoginByToken(rwr, req)
 	if err != nil {
-		return // http.StatusUnauthorized
+		return // http.StatusUnauthorized set on LoginByToken
 	}
 
 	telo, err := io.ReadAll(req.Body)
@@ -52,11 +52,8 @@ func PutOrder(rwr http.ResponseWriter, req *http.Request) {
 	err = securitate.DataBase.GetIDByOrder(context.Background(), orderNum, &orderID)
 	if err != nil { // если такого номера заказа нет в базе вносим его
 
-		//		orderStat, statusCode, _ := rual.GetFromAccrual(orderStr)
 		orderStat, _, _ := rual.GetFromAccrual(orderStr)
 
-		//err =  // tokenID)	- ID пользователя по полученному токену
-		//		if (statusCode != http.StatusOK && statusCode != http.StatusAccepted) || // если не ОК по accrual или ошибка по загрузке заказа
 		if securitate.DataBase.UpLoadOrderByID(context.Background(), tokenID,
 			orderNum, orderStat.Status, orderStat.Accrual) != nil {
 			rwr.WriteHeader(http.StatusInternalServerError) //500 — внутренняя ошибка сервера.

@@ -15,6 +15,8 @@ import (
 
 var host = "localhost:8081"
 
+// пока без горутин select for update и проч
+
 func main() {
 	logger, err := zap.NewDevelopment()
 	if err != nil {
@@ -26,7 +28,6 @@ func main() {
 	if err := initEnvs(); err != nil {
 		panic(err)
 	}
-	//	fmt.Printf("host %s -------- rual.Accrualhost %s\n", host, rual.Accrualhost)
 
 	if err := run(); err != nil {
 		panic(err)
@@ -57,9 +58,3 @@ func run() error {
 
 	return http.ListenAndServe(host, router)
 }
-
-// curl localhost:8088/api/user/register -H "Content-Type":"application/json" -d "{\"login\":\"user1\",\"password\":\"thePass\"}"
-// curl localhost:8088/api/user/login -H "Content-Type":"application/json" -d "{\"login\":\"user1\",\"password\":\"thePass\"}"
-
-// curl localhost:8080/api/goods -H "Content-Type":"application/json" -d "{\"match\":\"acer\",\"reward\":10,\"reward_type\":\"pt\"}" -v
-// curl localhost:8080/api/orders -H "Content-Type":"application/json" -d "{\"order\":\"0\",\"goods\":[{\"description\":\"Smth Acer 0\",\"price\":729}]}" -v

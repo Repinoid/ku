@@ -63,6 +63,5 @@ func GetWithDrawals(rwr http.ResponseWriter, req *http.Request) {
 		return
 	}
 	rwr.WriteHeader(http.StatusOK)
-	//	fmt.Fprintf(rwr, `{"status":"StatusOK"}`)
 	json.NewEncoder(rwr).Encode(orda)
 }
